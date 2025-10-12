@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  displayName String
+  handle      String   @unique
+  avatarUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tracks      Track[]
+  // followers/following via Follower relation
+  followers   Follower[] @relation("followee")
+  following   Follower[] @relation("follower")
+}
+
+model Track {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  isPublic    Boolean   @default(true)
+  durationMs  Int?
+  ownerId     String
+  owner       User      @relation(fields: [ownerId], references: [id])
+  genres      String[]
+  hashtags    String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([createdAt])
+}
+
+model Follower {
+  id         String  @id @default(cuid())
+  followerId String
+  followeeId String
+  follower   User    @relation("follower", fields: [followerId], references: [id])
+  followee   User    @relation("followee", fields: [followeeId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@unique([followerId, followeeId])
+}
