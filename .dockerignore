@@ -1,0 +1,9 @@
+node_modules
+.git
+.next
+dist
+coverage
+.vscode
+.DS_Store
+*.log
+pnpm-store
