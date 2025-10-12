@@ -1,12 +1,41 @@
-- 👋 Hi, I’m @middleAgedCoda
-- 👀 I’m interested in music production and tech
-- 🌱 I’m currently learning web application development 
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me: brentonchimzy2802@gmail.com 
-- 😄 Pronouns: ...old-school Him
-- ⚡ Fun fact: ...marijuana advocate in another life 😶‍🌫️
+# Lean AI Music (Next.js 14)
 
-<!---
-middleAgedCoda/middleAgedCoda is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+Minimal, production-ready AI text-to-music app.
+
+## Quick start
+
+1. Copy envs
+
+```bash
+cp .env.example .env.local
+```
+
+2. Install deps
+
+```bash
+pnpm i # or npm i / yarn
+```
+
+3. DB setup (Supabase SQL)
+
+```sql
+-- run in Supabase SQL editor
+-- file: supabase/schema.sql
+```
+
+4. Dev
+
+```bash
+pnpm dev
+```
+
+## Services
+- Supabase: DB + Auth adapter tables
+- Cloudflare R2: audio storage
+- Stripe: subscriptions ($10/month)
+- Suno AI: text-to-music generation
+
+## Deploy
+- Vercel with environment variables
+- Add webhook: `/api/webhooks/stripe`
+- R2 public domain in `R2_PUBLIC_BASE_URL`
