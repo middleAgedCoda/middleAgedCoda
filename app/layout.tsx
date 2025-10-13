@@ -1,24 +1,17 @@
-import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
+import "./globals.css";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: 'Lean AI Music',
-  description: 'Text-to-music with Suno AI',
-  manifest: '/manifest.webmanifest',
-  themeColor: '#6D28D9',
-  icons: [{ rel: 'icon', url: '/icons/icon-192.png' }],
+  title: "MyFrontPage.ai",
+  description: "AI-Powered Personal Context Engine",
 };
 
-import Navbar from "@/components/Navbar";
-import PWARegister from "@/components/PWARegister";
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className="min-h-dvh bg-black text-white antialiased">
-        <Navbar />
-        <PWARegister />
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-gray-950 text-gray-100">
+        <div className="max-w-5xl mx-auto px-4 py-8">{children}</div>
       </body>
     </html>
   );

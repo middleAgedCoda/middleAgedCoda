@@ -1,14 +1,53 @@
-import Link from 'next/link';
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { signIn, signOut } from "next-auth/react";
+import React from "react";
 
-export default function Home() {
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+
   return (
-    <main className="p-6 max-w-2xl mx-auto space-y-6">
-      <h1 className="text-3xl font-extrabold">Lean AI Music</h1>
-      <p className="text-white/80">Generate tracks from text with Suno AI. Save, share, and explore.</p>
-      <div className="grid grid-cols-2 gap-4">
-        <Link className="rounded bg-brand-700 px-4 py-3 text-center" href="/generate">Create</Link>
-        <Link className="rounded bg-white/10 px-4 py-3 text-center" href="/explore">Explore</Link>
-      </div>
+    <main className="space-y-10">
+      <section className="text-center">
+        <h1 className="text-4xl font-bold">MyFrontPage.ai</h1>
+        <p className="mt-2 text-gray-400">AI-Powered Personal Context Engine</p>
+        <div className="mt-6 flex items-center justify-center gap-3">
+          {session?.user ? (
+            <>
+              <Link href="/dashboard" className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-500">
+                Go to Dashboard
+              </Link>
+              <SignOutButton />
+            </>
+          ) : (
+            <button
+              onClick={async () => {
+                await signIn("google", { callbackUrl: "/dashboard" });
+              }}
+              className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-500"
+            >
+              Sign in with Google
+            </button>
+          )}
+        </div>
+      </section>
+
+      <p className="text-center text-sm text-gray-500">Minimal MVP: Auth, Dashboard, AI summary.</p>
     </main>
+  );
+}
+
+function SignOutButton() {
+  "use client";
+  return (
+    <button
+      onClick={async () => {
+        await signOut({ callbackUrl: "/" });
+      }}
+      className="rounded-md border border-gray-700 px-4 py-2 hover:bg-gray-800"
+    >
+      Sign out
+    </button>
   );
 }

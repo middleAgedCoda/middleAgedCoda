@@ -1,41 +1,12 @@
-# Lean AI Music (Next.js 14)
+MyFrontPage.ai MVP
 
-Minimal, production-ready AI text-to-music app.
+Env vars required:
+- NEXTAUTH_URL
+- NEXTAUTH_SECRET
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_SECRET
+- NEXT_PUBLIC_SUPABASE_URL
+- NEXT_PUBLIC_SUPABASE_ANON_KEY
+- GROQ_API_KEY (optional; falls back to mock)
 
-## Quick start
-
-1. Copy envs
-
-```bash
-cp .env.example .env.local
-```
-
-2. Install deps
-
-```bash
-pnpm i # or npm i / yarn
-```
-
-3. DB setup (Supabase SQL)
-
-```sql
--- run in Supabase SQL editor
--- file: supabase/schema.sql
-```
-
-4. Dev
-
-```bash
-pnpm dev
-```
-
-## Services
-- Supabase: DB + Auth adapter tables
-- Cloudflare R2: audio storage
-- Stripe: subscriptions ($10/month)
-- Suno AI: text-to-music generation
-
-## Deploy
-- Vercel with environment variables
-- Add webhook: `/api/webhooks/stripe`
-- R2 public domain in `R2_PUBLIC_BASE_URL`
+Supabase: create table summaries (user_id text primary key, summary text, updated_at timestamptz).

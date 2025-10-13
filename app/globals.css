@@ -1,7 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root { color-scheme: dark; }
-
-button { @apply rounded px-4 py-2; }
