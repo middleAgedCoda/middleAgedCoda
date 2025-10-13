@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: dark; }
+:root {
+  --background: #0b1020;
+  --foreground: #e5e7eb;
+}
 
-button { @apply rounded px-4 py-2; }
+html, body, :root {
+  height: 100%;
+}
+
+body {
+  @apply bg-gray-950 text-gray-100 antialiased;
+}
+
+.container-max {
+  @apply max-w-5xl mx-auto px-4;
+}

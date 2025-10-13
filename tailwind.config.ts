@@ -1,28 +1,21 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from "tailwindcss";
 
-export default {
+const config: Config = {
   content: [
-    './app/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
         brand: {
-          DEFAULT: '#6D28D9',
-          50: '#F5F3FF',
-          100: '#EDE9FE',
-          200: '#DDD6FE',
-          300: '#C4B5FD',
-          400: '#A78BFA',
-          500: '#8B5CF6',
-          600: '#7C3AED',
-          700: '#6D28D9',
-          800: '#5B21B6',
-          900: '#4C1D95',
+          DEFAULT: "#111827",
+          foreground: "#F9FAFB",
         },
       },
     },
   },
-  plugins: [],
-} satisfies Config;
+  plugins: [require("@tailwindcss/typography")],
+};
+
+export default config;
