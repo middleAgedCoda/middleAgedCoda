@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
-import { signOut } from "next-auth/react";
+import { authOptions } from "@/lib/auth";
+import { signIn, signOut } from "next-auth/react";
 import React from "react";
 
 export default async function HomePage() {
@@ -21,27 +21,19 @@ export default async function HomePage() {
               <SignOutButton />
             </>
           ) : (
-            <Link href="/signin" className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-500">
-              Sign in
-            </Link>
+            <button
+              onClick={async () => {
+                await signIn("google", { callbackUrl: "/dashboard" });
+              }}
+              className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-500"
+            >
+              Sign in with Google
+            </button>
           )}
         </div>
       </section>
 
-      <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <div className="rounded-xl border border-gray-800 bg-gray-950 p-6">
-          <h3 className="font-semibold">Connect your world</h3>
-          <p className="mt-1 text-sm text-gray-400">Gmail, Discord, Slack (simulated for now)</p>
-        </div>
-        <div className="rounded-xl border border-gray-800 bg-gray-950 p-6">
-          <h3 className="font-semibold">AI summary</h3>
-          <p className="mt-1 text-sm text-gray-400">One page that keeps you in the loop</p>
-        </div>
-        <div className="rounded-xl border border-gray-800 bg-gray-950 p-6">
-          <h3 className="font-semibold">Privacy-first</h3>
-          <p className="mt-1 text-sm text-gray-400">Your data, your control</p>
-        </div>
-      </section>
+      <p className="text-center text-sm text-gray-500">Minimal MVP: Auth, Dashboard, AI summary.</p>
     </main>
   );
 }

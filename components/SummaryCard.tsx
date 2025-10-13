@@ -1,20 +1,11 @@
 "use client";
 import React from "react";
-import ReactMarkdown from "react-markdown";
-import { cn } from "@/lib/utils";
 
-type SummaryCardProps = {
-  content: string;
-  className?: string;
-};
-
-export function SummaryCard({ content, className }: SummaryCardProps) {
+export function SummaryCard({ content }: { content: string }) {
   return (
-    <div className={cn("rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-lg", className)}>
+    <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
       <h2 className="mb-3 text-xl font-semibold">AI Summary</h2>
-      <div className="prose prose-invert prose-p:leading-relaxed max-w-none">
-        <ReactMarkdown>{content}</ReactMarkdown>
-      </div>
+      <pre className="whitespace-pre-wrap text-sm leading-relaxed text-gray-100">{content}</pre>
     </div>
   );
 }

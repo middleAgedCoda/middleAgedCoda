@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode } from "react";
-import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "MyFrontPage.ai",
@@ -11,11 +10,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen">
-        {/* Global client providers */}
-        <Providers>
-          <div className="container-max py-8">{children}</div>
-        </Providers>
+      <body className="min-h-screen bg-gray-950 text-gray-100">
+        <div className="max-w-5xl mx-auto px-4 py-8">{children}</div>
       </body>
     </html>
   );
