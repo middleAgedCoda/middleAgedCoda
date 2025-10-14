@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: SHAMWARI API
+  version: 0.1.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /quotes:
+    post:
+      summary: Get executable quote (placeholder)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sendAmountZar:
+                  type: number
+                payoutCurrency:
+                  type: string
+                  enum: [USD, ZWL]
+              required: [sendAmountZar, payoutCurrency]
+      responses:
+        '200':
+          description: Quote
+  /transfers:
+    post:
+      summary: Create transfer intent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                recipient:
+                  type: object
+                quoteId:
+                  type: string
+                sendAmountZar:
+                  type: number
+              required: [userId, recipient, quoteId, sendAmountZar]
+      responses:
+        '200':
+          description: Transfer created
+    get:
+      summary: Get transfer by id (placeholder)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Transfer status
