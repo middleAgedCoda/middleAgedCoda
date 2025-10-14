@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  phone     String   @unique
+  email     String?  @unique
+  createdAt DateTime @default(now())
+  kyc       KycVerification[]
+  wallets   Wallet[]
+  recipients Recipient[]
+  transfers Transfer[]
+}
+
+model KycVerification {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  providerRef String
+  status      String
+  riskFlags   Json
+  createdAt   DateTime @default(now())
+}
+
+model Wallet {
+  id               String   @id @default(uuid())
+  user             User     @relation(fields: [userId], references: [id])
+  userId           String
+  currency         String
+  balanceAvailable Decimal  @default(0)
+  balancePending   Decimal  @default(0)
+  createdAt        DateTime @default(now())
+}
+
+model Recipient {
+  id           String   @id @default(uuid())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  name         String
+  payoutType   String
+  payoutDetails Json
+  country      String   @default("ZW")
+  createdAt    DateTime @default(now())
+  transfers    Transfer[]
+}
+
+model Quote {
+  id              String   @id @default(cuid())
+  sourceCurrency  String
+  targetCurrency  String
+  rate            Decimal
+  midMarketRate   Decimal
+  expiresAt       DateTime
+  markupBps       Int
+  fees            Json
+  createdAt       DateTime @default(now())
+}
+
+model Transfer {
+  id              String   @id @default(cuid())
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String
+  recipient       Recipient @relation(fields: [recipientId], references: [id])
+  recipientId     String
+  quote           Quote?   @relation(fields: [quoteId], references: [id])
+  quoteId         String?
+  sendAmountZar   Decimal
+  payoutAmount    Decimal?
+  payoutCurrency  String
+  status          String
+  timeline        Json
+  createdAt       DateTime @default(now())
+}
+
+model FundingIntent {
+  id           String   @id @default(cuid())
+  provider     String
+  method       String
+  amount       Decimal
+  status       String
+  providerRef  String?
+  createdAt    DateTime @default(now())
+}
+
+model WebhookEvent {
+  id           String   @id @default(cuid())
+  provider     String
+  payloadHash  String   @unique
+  processedAt  DateTime?
+  success      Boolean
+  error        String?
+  createdAt    DateTime @default(now())
+}
